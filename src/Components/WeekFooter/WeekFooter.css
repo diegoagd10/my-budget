@@ -1,0 +1,22 @@
+.WeekFooter-main {
+  position: fixed;
+  padding-left: 25px;
+  padding-right: 25px;
+  height: 50px;
+  left: 0;
+  right: 0;
+  bottom: 50px;
+  background-color: rgb(53,53,53);
+}
+
+.WeekFooter-label {
+  color: lightgray;
+}
+
+.WeekFooter-income {
+  color: green;
+}
+
+.WeekFooter-expense {
+  color: red;
+}

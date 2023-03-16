@@ -1,0 +1,23 @@
+.PeriodFooter-main {
+  position: fixed;
+  padding-left: 25px;
+  padding-right: 25px;
+  height: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(53,53,53);
+  color: lightgray;
+}
+
+.PeriodFooter-label {
+  color: lightgrey;
+}
+
+.PeriodFooter-income {
+  color: green;
+}
+
+.PeriodFooter-expenses {
+  color: red;
+}

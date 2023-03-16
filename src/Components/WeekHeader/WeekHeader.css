@@ -1,0 +1,16 @@
+.WeekHeader-main {
+  position: fixed;
+  padding-left: 25px;
+  padding-right: 25px;
+  height: 80px;
+  top: 56px;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background-color: rgb(53, 53, 53);
+}
+
+.WeekHeader-title {
+  text-align: center;
+  color: lightgray;
+}
