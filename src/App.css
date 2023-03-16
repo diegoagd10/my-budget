@@ -1,0 +1,28 @@
+.App {
+  background-color: rgb(43,43,43);
+}
+
+.App-main {
+  margin-top: 130px;
+  margin-bottom: 100px;
+  padding: 25px;
+  overflow-y: auto;
+  height: calc(100vh - 230px);
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.primary-text-color {
+  color: lightgray;
+}

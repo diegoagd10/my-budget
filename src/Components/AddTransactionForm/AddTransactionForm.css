@@ -1,0 +1,11 @@
+.AddTransactionForm-main {
+  position: fixed;
+  padding-top: 25px;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  color: lightgray;
+  background-color: rgb(43,43,43);
+}
