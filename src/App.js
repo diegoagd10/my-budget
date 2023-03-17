@@ -10,6 +10,8 @@ import TransactionSvc from "./Services/TransactionSvc";
 import WeekHeader from './Components/WeekHeader/WeekHeader';
 import WeekFooter from './Components/WeekFooter/WeekFooter';
 import './App.css';
+import Wait from "./Components/Wait/Wait";
+import CreateDb from "./Database/CreateDb";
 
 const emptyTransaction = {
   description: "",
@@ -33,6 +35,7 @@ class App extends React.Component {
     this.onClickTransactionEditBtn = this.onClickTransactionEditBtn.bind(this);
     this.onClickTransactionDeleteBtn = this.onClickTransactionDeleteBtn.bind(this);
     this.state = {
+      loading: true,
       addTransactionFormVisible: false,
       transaction: _.cloneDeep(emptyTransaction),
       categories: [],
@@ -40,7 +43,7 @@ class App extends React.Component {
       period: PeriodSvc.getPeriod(0),
       currentDate: PeriodSvc.getCurrentDateString(),
       weekDays: PeriodSvc.getWeekDays(0),
-      transactions: [],
+      transactions: []
     };
   }
 
@@ -124,12 +127,9 @@ class App extends React.Component {
   *********************
   */
   componentDidMount() {
-    Databases.categories.allDocs({ include_docs: true })
-      .then(({ rows }) => {
-        const categories = rows.map(({ doc }) => doc);
-        this.setState({ categories: categories });
-      });
-    this.fetchTransactions();
+    this.initialDbFetch().then(() => {
+      this.setState({ loading: false });
+    });
   }
 
   componentDidUpdate(_, prevState) {
@@ -152,6 +152,18 @@ class App extends React.Component {
       period: PeriodSvc.getPeriod(newWeek),
       weekDays: PeriodSvc.getWeekDays(newWeek)
     });
+  }
+
+  async initialDbFetch() {
+    await CreateDb();
+    await this.fetchCategories();
+    this.fetchTransactions();
+  }
+
+  async fetchCategories() {
+    const categoriesRows = await (await (Databases.categories.allDocs({ include_docs: true }))).rows;
+    const categories = categoriesRows.map(({ doc }) => doc);
+    this.setState({ categories: categories });
   }
 
   fetchTransactions() {
@@ -194,6 +206,7 @@ class App extends React.Component {
     }, defaults);
     return (
       <div className="App">
+        {this.state.loading && (<Wait />)}
         <Navbar
           periodText={periodText}
           onClickHomeBtn={this.onClickHomeBtn}

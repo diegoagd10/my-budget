@@ -3,25 +3,55 @@ import { v4 as uuid } from "uuid";
 import Databases from "../Database/Databases";
 import PeriodSvc from "./PeriodSvc";
 
+const handleError = (error) => {
+  console.error(error);
+  throw new Error(`An error occurred at TransactionSvc: ${error.message}`);
+};
+
+async function fetchTransactions(startTime, endTime) {
+  return (await Databases.transactions.find({
+    selector: {
+      date: { $gte: startTime, $lte: endTime },
+      recurrence: "one-time"
+    },
+    sort: [
+      { date: 'asc', amount: 'asc' }
+    ]
+  })).docs;
+};
+
+async function fetchScheduledTransactions(endTime, startTime) {
+  return await Databases.transactions.find({
+    selector: {
+      recurrence: { $ne: "one-time" },
+      $not: {
+        $or: [
+          { startDate: { $gt: endTime } },
+          { endDate: { $lt: startTime } },
+        ]
+      }
+    }
+  });
+}
+
 class TransactionSvc {
   async create(transaction) {
-    const date = moment(transaction.date);
+    const date = moment(transaction.date).toDate().getTime();
     const recurrence = transaction.recurrence;
     const transactionDb = {
       ...transaction,
-      date: date.toDate().getTime(),
+      date: date,
       amount: parseFloat(transaction.amount),
       _id: uuid()
     };
     if (recurrence !== "one-time") {
-      transactionDb.startDate = date.toDate().getTime();
-      transactionDb.endDate = date.add(5, "years").toDate().getTime();
+      transactionDb.startDate = date;
+      transactionDb.endDate = moment(transaction.date).add(5, "years").toDate().getTime();
     }
     try {
       await Databases.transactions.put(transactionDb);
     } catch (error) {
-      console.error(error);
-      throw Error(error);
+      handleError(error);
     }
   }
 
@@ -30,8 +60,7 @@ class TransactionSvc {
       const result = await Databases.transactions.remove(transactionId, rev);
       return result.ok;
     } catch (error) {
-      console.log(error);
-      throw Error(error);
+      handleError(error);
     }
   }
 
@@ -39,26 +68,8 @@ class TransactionSvc {
     try {
       const startTime = startDate.getTime();
       const endTime = endDate.getTime();
-      const transactions = (await Databases.transactions.find({
-        selector: {
-          date: { $gte: startTime, $lte: endTime },
-          recurrence: "one-time"
-        },
-        sort: [
-          { date: 'asc', amount: 'asc' }
-        ]
-      })).docs;
-      const scheduledTransactions = await Databases.transactions.find({
-        selector: {
-          recurrence: { $ne: "one-time" },
-          $not: {
-            $or: [
-              { startDate: { $gt: endTime } },
-              { endDate: { $lt: startTime } },
-            ]
-          }
-        }
-      });
+      const transactions = await fetchTransactions(startTime, endTime);
+      const scheduledTransactions = await fetchScheduledTransactions(endTime, startTime);
       for (const transaction of scheduledTransactions.docs) {
         if (transaction.startDate) {
           let date = PeriodSvc.getMonthDate(transaction.startDate);
@@ -100,3 +111,4 @@ class TransactionSvc {
 
 const transactionSvc = new TransactionSvc();
 export default transactionSvc;
+

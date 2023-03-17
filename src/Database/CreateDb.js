@@ -46,7 +46,7 @@ async function createCategories(db) {
   }
 }
 
-function CreateDb() {
+async function CreateDb() {
   createCategories(Databases.categories)
     .catch(error => console.error(error));
 }
