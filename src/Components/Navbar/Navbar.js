@@ -14,11 +14,10 @@ function Navbar({
 
         <div className="navbar-brand is-white">
           <a className="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo-white.png" width="112" height="28" />
+            <img src="https://bulma.io/images/bulma-logo-white.png" width="112" height="28" alt="No logo" />
           </a>
 
-          <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
+          <a role="button" href="#" className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </a>
@@ -26,17 +25,17 @@ function Navbar({
 
         <div className="navbar-menu">
           <div className="navbar-start">
-            <a className="navbar-item" onClick={onClickHomeBtn}>
+            <a href="#" className="navbar-item" onClick={onClickHomeBtn}>
               Home
             </a>
 
             <div className="navbar-item has-dropdown is-hoverable">
-              <a className="navbar-link">
+              <a href="#" className="navbar-link">
                 Transactions
               </a>
 
               <div className="navbar-dropdown">
-                <a className="navbar-item" onClick={onClickAddTransactionBtn}>
+                <a href="#" className="navbar-item" onClick={onClickAddTransactionBtn}>
                   Add new
                 </a>
               </div>
@@ -52,13 +51,13 @@ function Navbar({
           </div>
           <div className="navbar-item">
             <div className="buttons">
-              <a className="button" onClick={onClickPrevWeekBtn}>
+              <a href="#" className="button" onClick={onClickPrevWeekBtn}>
                 &lt;
               </a>
-              <a className="button is-primary" onClick={onClickCurrentWeekBtn}>
+              <a href="#" className="button is-primary" onClick={onClickCurrentWeekBtn}>
                 Today
               </a>
-              <a className="button" onClick={onClickNextWeekBtn}>
+              <a href="#" className="button" onClick={onClickNextWeekBtn}>
                 &gt;
               </a>
             </div>

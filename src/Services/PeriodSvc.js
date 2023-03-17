@@ -74,4 +74,5 @@ class PeriodSvc {
   }
 }
 
-export default new PeriodSvc();
+const periodSvc = new PeriodSvc();
+export default periodSvc;

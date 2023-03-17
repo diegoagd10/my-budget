@@ -19,11 +19,13 @@ function Transaction({
       </div>
       <footer className="card-footer">
         <a
+          href="#"
           className="card-footer-item"
           onClick={() => onClickTransactionEditBtn(transaction._id)}>
           Edit
         </a>
         <a
+          href="#"
           className="card-footer-item"
           onClick={() => onClickTransactionDeleteBtn(transaction._id)}>
           Delete
