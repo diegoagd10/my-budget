@@ -25,6 +25,16 @@ class TransactionSvc {
     }
   }
 
+  async remove(transactionId, rev) {
+    try {
+      const result = await Databases.transactions.remove(transactionId, rev);
+      return result.ok;
+    } catch (error) {
+      console.log(error);
+      throw Error(error);
+    }
+  }
+
   async list(startDate, endDate) {
     try {
       const startTime = startDate.getTime();
@@ -57,6 +67,10 @@ class TransactionSvc {
               transactions.push({
                 ...transaction,
                 _id: uuid(),
+                groupId: { 
+                  _id: transaction._id,
+                  _rev: transaction._rev
+                },
                 date: date.getTime()
               });
             }

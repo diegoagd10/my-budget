@@ -101,8 +101,21 @@ class App extends React.Component {
   }
 
   onClickTransactionDeleteBtn(transactionId) {
-    // TODO: Implement delete
-    console.log(`delete: ${transactionId}`);
+    if (window.confirm("Are you sure you want to delete the transaction?")) {
+      const transaction = this.state.transactions.find(t => t._id === transactionId);
+      if (transaction) {
+        let { _id, _rev } = transaction;
+        if (transaction.groupId) {
+          _id = transaction.groupId._id;
+          _rev = transaction.groupId._rev;
+        }
+        TransactionSvc.remove(_id, _rev).then(() => {
+          this.fetchTransactions();
+        });
+      } else {
+        this.fetchTransactions();
+      }
+    }
   }
 
   /*
