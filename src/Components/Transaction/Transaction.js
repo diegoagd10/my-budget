@@ -18,18 +18,20 @@ function Transaction({
         </h3>
       </div>
       <footer className="card-footer">
-        <a
-          href="#"
-          className="card-footer-item"
-          onClick={() => onClickTransactionEditBtn(transaction._id)}>
-          Edit
-        </a>
-        <a
-          href="#"
-          className="card-footer-item"
-          onClick={() => onClickTransactionDeleteBtn(transaction._id)}>
-          Delete
-        </a>
+        <div className="card-footer-item">
+          <button
+            className="button is-ghost"
+            onClick={() => onClickTransactionEditBtn(transaction._id)}>
+            Edit
+          </button>
+        </div>
+        <div className="card-footer-item">
+          <button
+            className="button is-ghost"
+            onClick={() => onClickTransactionDeleteBtn(transaction._id)}>
+            Delete
+          </button>
+        </div>
       </footer>
     </div>
   );
