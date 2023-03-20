@@ -2,7 +2,7 @@ import React from 'react';
 
 const handleChange = (e, onChageEvent) => {
   const { value } = e.target;
-  const isValid = /^[a-zA-Z]*$/.test(value);
+  const isValid = /^[ a-zA-Z]*$/.test(value);
   if (isValid) {
     onChageEvent(e);
   }
