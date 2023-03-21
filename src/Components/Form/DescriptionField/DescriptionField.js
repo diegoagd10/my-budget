@@ -19,7 +19,6 @@ export function DescriptionField({ formData, onChange }) {
           className="input is-danger"
           type="text"
           placeholder="e.g. Rent"
-          pattern="[a-zA-Z]+"
           maxLength="25"
           value={formData.description}
           onChange={(e) => handleChange(e, onChange)} />
