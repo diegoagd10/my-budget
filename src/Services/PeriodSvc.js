@@ -1,6 +1,6 @@
 import moment from "moment";
 
-const periodStartDate = moment.utc("2022-12-22 12:00:00", "YYYY-MM-DD HH:mm:ss");
+const periodStartDate = moment.utc("2022-12-29 12:00:00", "YYYY-MM-DD HH:mm:ss");
 
 function isStartPeriod(modDate) {
   return modDate === 0;
